@@ -1,4 +1,6 @@
 import * as fs from 'fs';
+// import * as plantuml from 'node-plantuml'; // Gives an error bc the module is not typed
+const plantuml = require('node-plantuml');
 
 // Plant UML stuff
 interface PUMLNode {
@@ -54,27 +56,32 @@ interface FASTEdge {
 function convertFASToPuml(fastObj: FASTObject) {
   let nodes: PUMLNode[] = Object.values(fastObj.nodes).map(fastNode => {
     return {
-      name: fastNode.name,
+      name: convertFASTName(fastNode.name),
       fields: fastNode.payload.attributes.map(attr => {
         return {
-          name: attr.name,
+          name: convertFASTName(attr.name),
           type: attr.type,
         }})}
     })
 
   let relations: PUMLRelation[] = Object.values(fastObj.edges).map(fastEdge => {
     return {
-      from: fastEdge.payload.from,
-      to: fastEdge.payload.to,
+      from: convertFASTName(fastEdge.payload.from),
+      to: convertFASTName(fastEdge.payload.to),
     }})
 
   return drawPUMLFile(nodes, relations)
 }
 
+function convertFASTName(fastName: string) {
+  return fastName.replace('#', '.')
+  // return fastName
+}
+
 function drawPUMLFile(nodes: PUMLNode[], relations: PUMLRelation[]) {
   return `@startuml
 
-${nodes.map(drawNode)}
+${nodes.map(drawNode).join('\n')}
 
 ${relations.map(drawRelation)}
 
@@ -86,10 +93,9 @@ function drawRelation(relation: PUMLRelation) {
 }
 
 function drawNode(node: PUMLNode) {
-  return `entity ${node.name} {
-  ${node.fields.map(field => '  ' + drawField(field)).join('\n')}
-}
-  `
+  return `class ${node.name} {
+  {field} ${node.fields.map(field => '  ' + drawField(field)).join('\n')}
+}`
 }
 
 function drawField(field: PUMLField) {
@@ -127,6 +133,25 @@ let example2 = {
         ],
       },
     },
+    'Concepts#Tag': {
+      type: 'Concept',
+      name: 'Concepts#Tag',
+      payload: {
+        attributes: [
+          {
+            name: 'title',
+            type: 'string',
+            description: 'The title of a tag',
+          },
+        ],
+        actions: [
+          {
+            name: 'add', 
+            description: 'Add a tag'
+          },
+        ],
+      },
+    },
   },
   edges: {
     'Edge1': {
@@ -142,8 +167,12 @@ let example2 = {
 
 fs.writeFile('generated.puml', convertFASToPuml(example2), function(err) {
     if(err) {
-        return console.log(err);
+        return console.log(err)
     }
 
-    console.log("The file was saved!");
+    console.log("The file was saved!")
+    
+    console.log("Generating image")
+    var gen = plantuml.generate("generated.puml")
+    gen.out.pipe(fs.createWriteStream("generated-image.png"))
 })
