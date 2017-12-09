@@ -173,6 +173,6 @@ fs.writeFile('generated.puml', convertFASToPuml(example2), function(err) {
     console.log("The file was saved!")
     
     console.log("Generating image")
-    var gen = plantuml.generate("generated.puml")
-    gen.out.pipe(fs.createWriteStream("generated-image.png"))
+    var gen = plantuml.generate("generated.puml", {format:'svg'})
+    gen.out.pipe(fs.createWriteStream("generated-image.svg"))
 })
