@@ -5,6 +5,7 @@
   "scripts": {
     "start": "ts-node index.ts",
     "puml": "ts-node generator/puml_generator.ts",
+    "md": "ts-node generator/md_generator.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build:grammar && npm run build:typescript",
     "build:grammar": "antlr4ts -visitor grammar/bjml.g4",

@@ -11,6 +11,7 @@ interface FASTObject {
 interface FASTNode {
   type: string;
   name: string;
+  description: string;
   payload: FASTPayload;
 }
 
