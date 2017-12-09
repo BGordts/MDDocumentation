@@ -1,0 +1,12 @@
+@startuml
+
+class Concepts.TodoItem {
+  {field}   title (string)
+}
+class Concepts.Tag {
+  {field}   title (string)
+}
+
+Concepts.TodoItem --> Concepts.Tag
+
+@enduml
