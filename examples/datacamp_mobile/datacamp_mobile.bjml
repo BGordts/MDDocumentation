@@ -1,0 +1,16 @@
+module Concepts {
+  concept Excercise {
+    attributes {
+      context: text_extended
+      question: string
+    }
+  }
+}
+
+module Types {
+  text_bold_code: string "Text that can contain plain text, code and bold"
+  text_code: string "Text that can contain plain text and code "
+}
+
+# Questiosn:
+# - How do we specify the context and question type? With a type system or using concepts?

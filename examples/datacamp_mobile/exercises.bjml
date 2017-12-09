@@ -1,0 +1,47 @@
+module Concepts_Exercises {
+  concept Excercise {
+    context: TextPlainBoldCode
+    question: TextPlain
+    +question_block: QuestionBlock | null
+    +answer_input: AnswerInput // + means to override
+  }
+
+  concept ExerciseReorder extends Exercise {
+    question_block: AnswerInputSelectCode
+    answer_input: AnswerInputReorder
+  }
+
+  concept ExerciseTap extends Exercise {
+    question_block: QuestionBlockCode
+    answer_input: AnswerInputTap
+  }
+
+  concept ExerciseSelectOutput extends Exercise {
+    question_block: QuestionBlockCode
+    answer_input: AnswerInputSelectOutput
+  }
+
+  concept ExerciseSelectCode extends Exercise {
+    question_block: QuestionBlockOutput
+    answer_input: AnswerInputSelectCode
+  }
+
+  concept ExerciseSelectPlain extends Exercise {
+    question_block: null
+    answer_input: AnswerInputSelectPlain
+  }
+
+  concept AnswerInput
+  concept AnswerInputReorder
+  concept AnswerInputTap
+  concept AnswerInputSelectPlain
+  concept AnswerInputSelectCode
+  concept AnswerInputSelectOutput
+
+  concept QuestionBlock
+  concept QuestionBlockCode
+  concept QuestionBlockOutput
+  
+  concept TextPlain
+  concept TextPlainBoldCode
+}
