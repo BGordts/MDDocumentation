@@ -84,6 +84,7 @@ let example2 = {
     'Concepts#TodoItem': {
       type: 'Concept',
       name: 'Concepts#TodoItem',
+      description: 'Represents a todo',
       payload: {
         attributes: [
           {
@@ -103,6 +104,7 @@ let example2 = {
     'Concepts#Tag': {
       type: 'Concept',
       name: 'Concepts#Tag',
+      description: 'Using tags, todo items can be grouped',
       payload: {
         attributes: [
           {
@@ -133,13 +135,13 @@ let example2 = {
 }
 
 fs.writeFile('generated.puml', convertFASToPuml(example2), function(err) {
-    if(err) {
-        return console.log(err)
-    }
+  if(err) {
+      return console.log(err)
+  }
 
-    console.log("The file was saved!")
-    
-    console.log("Generating image")
-    var gen = plantuml.generate("generated.puml", {format:'svg'})
-    gen.out.pipe(fs.createWriteStream("generated-image.svg"))
+  console.log("The file was saved!")
+
+  console.log("Generating image")
+  var gen = plantuml.generate("generated.puml", {format:'svg'})
+  gen.out.pipe(fs.createWriteStream("generated-image.svg"))
 })
