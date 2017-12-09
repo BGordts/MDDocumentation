@@ -1,0 +1,54 @@
+{
+  nodes: {
+    'Concepts#TodoItem': {
+      type: 'Concept',
+      name: 'Concepts#TodoItem',
+      payload: {
+        attributes: [
+	  {
+	    name: 'title',
+	    type: 'string',
+	    description: 'The title of a todo item',
+	  },
+	  ...
+	],
+	actions: [
+	  {name: 'add', description: 'Add a todo'},
+	  ...
+	],
+	...
+      },
+    },
+  },
+  nodes: [
+    {
+      type: 'Concept',
+      name: 'Concepts#TodoItem',
+      payload: {
+        attributes: [
+	  {
+	    name: 'title',
+	    type: 'string',
+	    description: 'The title of a todo item',
+	  },
+	  ...
+	],
+	actions: [
+	  {name: 'add', description: 'Add a todo'},
+	  ...
+	],
+	...
+      },
+    },
+  ],
+  edges: [
+    {
+      type: 'ConceptRelation',
+      payload: {
+        from: 'Concepts#TodoItem',
+        to: 'Concepts#Tag',
+	multiplicity: 'many-to-many',
+      }
+    },
+  ],
+}
