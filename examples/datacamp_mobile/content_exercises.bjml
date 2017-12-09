@@ -4,6 +4,7 @@ module Concepts_Exercises {
     question: TextPlain
     +question_block: QuestionBlock | null
     +answer_input: AnswerInput // + means to override
+    // we don't have distractors yet
   }
 
   concept ExerciseReorder extends Exercise {

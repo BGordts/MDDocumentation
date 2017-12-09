@@ -1,0 +1,20 @@
+import Concepts_Content
+
+module Concepts_Users {
+  concept User {
+    main_id: integer
+    email: string
+  }
+
+  concept Workout {
+    lesson: Concepts_Content.Lesson
+    started_at: date
+    ended_at: date
+    cancelled: boolean
+  }
+
+  concept Session {
+    workouts: Workout[]
+  }
+
+}
