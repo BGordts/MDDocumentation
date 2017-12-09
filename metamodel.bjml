@@ -12,7 +12,7 @@ class TypeString
 
 Types have constraints:
 - String is by default 255 chars
-- 
+-  
 
 
 
@@ -20,3 +20,6 @@ Types have constraints:
 metamodel validation:
 - warning for every concept that does not have table
 - every concept must explicitly list all its relations. E.g. TodoItem has many Tags and a Tag has many Todo Items. If not: error.
+
+
+Concept --> persist codegen --> Data

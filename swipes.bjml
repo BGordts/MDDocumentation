@@ -1,7 +1,7 @@
 module Concepts
   node TodoItem
     attributes
-      title: string
+      title: string # The title of a todo item
       created_at: date
       tags: Tag[]
       notes: string[]
@@ -55,11 +55,25 @@ module Data
       id: integer
 
 module Screens
-  node DefaultScreen
-    attributes
+  component MainScreen
+    subcompontents
       side_bar: SideBar
-      header: Header
-      main: Main
+      main_container: MainContainer
+
+  component MainContainer
+    subcompontents
+      action_menu: ActionMenu
+      todo_container: TodoContainer
+
+  component TodoContainer
+    subcompontnets
+      header: TodoHeader
+      todo_container: TodoContainer
+
+  component TodoContainer
+    subcompontents
+      
+
 
 # Questions
 # - Is it always possible to link concepts with database elements? What if not?
