@@ -1,7 +1,7 @@
 import {FASTObject, FASTNode, FASTEdge, FASTAttribute} from './fast_types';
 import * as fs from 'fs';
 
-function convertFASTNodeToMD(node: FASTNode) {
+export function convertFASTNodeToMD(node: FASTNode) {
   return `## ${node.name}
 >${node.description}
 ### Attributes
@@ -74,10 +74,10 @@ let example2 = {
   }
 }
 
-fs.writeFile('generated.md', generateMD(example2), function(err) {
-  if(err) {
-      return console.log(err)
-  }
+// fs.writeFile('generated.md', generateMD(example2), function(err) {
+//   if(err) {
+//       return console.log(err)
+//   }
 
-  console.log("The file was saved!")
-})
+//   console.log("The file was saved!")
+// })

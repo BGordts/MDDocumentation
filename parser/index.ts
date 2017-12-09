@@ -6,6 +6,7 @@ import { bjmlParser, NodeContext, Node_attributeContext } from './grammar/bjmlPa
 import { bjmlVisitor } from './grammar/bjmlVisitor'
 import { FASTObject, FASTNode } from './generator/fast_types'
 import { convertFASToPuml } from './generator/puml_generator'
+import { convertFASTNodeToMD } from './generator/md_generator'
 
 const file = readFileSync('./grammar/test.bjml').toString()
 let inputStream = new ANTLRInputStream(file);
@@ -27,7 +28,7 @@ function transformAttribute (attribute: Node_attributeContext): AttributeAst {
   let description = ''
 
   try {
-    description = attribute.MULTI_LINE_COMMENT().getText()
+    description = attribute.MULTI_LINE_COMMENT().getText().replace('/*', '').replace('*/', '').trim()
   } catch (e) {
   }
 
@@ -47,6 +48,7 @@ function transformNode (node: NodeContext): FASTNode {
   return {
     type: node.NODE_CLASS().getText(),
     name: node.IDENTIFIER().getText(),
+    description: '',
     payload: {
       attributes,
     }
@@ -58,6 +60,5 @@ for (let node of result.node()) {
   fast.nodes[transformed.name] = transformed
 }
 
-console.log(fast)
-console.log(fast.nodes.Testing.payload)
 console.log(convertFASToPuml(fast))
+Object.values(fast.nodes).map(n => console.log(convertFASTNodeToMD(n)))
