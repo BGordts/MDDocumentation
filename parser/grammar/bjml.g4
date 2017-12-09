@@ -5,7 +5,16 @@ file
   ;
 
 node
-  : NODE_CLASS IDENTIFIER (LBRACE node_attributes? node_actions? RBRACE)?
+  : NODE_CLASS IDENTIFIER (LBRACE node_refinements node_attributes? node_actions? RBRACE)?
+  ;
+
+node_refinements
+  : node_refinement*
+  ;
+
+node_refinement
+  : 'refines concept' IDENTIFIER
+  | 'refines relation' IDENTIFIER IDENTIFIER
   ;
 
 node_attributes
@@ -13,7 +22,7 @@ node_attributes
   ;
 
 node_attribute
-  : LOW_IDENTIFIER COLON IDENTIFIER MULTI_LINE_COMMENT? COMMA
+  : IDENTIFIER COLON IDENTIFIER MULTI_LINE_COMMENT?
   ;
 
 node_actions
@@ -21,7 +30,7 @@ node_actions
   ;
 
 node_action
-  : LOW_IDENTIFIER
+  : IDENTIFIER
   ;
 
 LBRACE: '{';
@@ -30,10 +39,8 @@ COLON: ':';
 COMMA: ',';
 
 MULTI_LINE_COMMENT: '/*' .*? '*/';
-NODE_CLASS: 'concept' | 'node';
-IDENTIFIER: [A-Z][a-zA-Z]*;
-
-LOW_IDENTIFIER: [a-z][a-zA-Z_]*;
+NODE_CLASS: 'concept' | 'node' | 'table';
+IDENTIFIER: [a-zA-Z_]+;
 
 /* NL: ('\r\n'|'\n'|'\r')+; */
 /* WS: [ \t\r\n] -> skip; */

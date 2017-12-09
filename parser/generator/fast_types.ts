@@ -1,5 +1,5 @@
 // FAST: Flat AST
-interface FASTObject {
+type FASTObject = {
   nodes: {
     [key: string]: FASTNode
   };
@@ -8,24 +8,24 @@ interface FASTObject {
   };
 }
 
-interface FASTNode {
+type FASTNode = {
   type: string;
   name: string;
   description: string;
   payload: FASTPayload;
 }
 
-interface FASTPayload {
+type FASTPayload = {
   attributes: FASTAttribute[];
 }
 
-interface FASTAttribute {
+type FASTAttribute = {
   name: string;
   type: string;
   description: string;
 }
 
-interface FASTEdge {
+type FASTEdge = {
   type: string;
   payload: {
     from: string;

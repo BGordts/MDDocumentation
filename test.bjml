@@ -6,7 +6,6 @@ module Data
     attributes
       # This is the main question
       question: Option<string>
-        delivers_content_for Component.Question
 
   datanode SelectCodeExercise
     extends Exercise
@@ -50,10 +49,9 @@ edge extends
  to datanode
  color '#00ff00'
 
-edge delivers_content_for
+edge content_delivered_by
   from datanode#attribute
   to component
-  reverse content_delivered_by
 edge contains
   from databaseTable#attribute
   to datanode#attribute

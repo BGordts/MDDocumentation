@@ -33,8 +33,8 @@ function transformAttribute (attribute: Node_attributeContext): AttributeAst {
   }
 
   return {
-    name: attribute.LOW_IDENTIFIER().getText(),
-    type: attribute.IDENTIFIER().getText(),
+    name: attribute.IDENTIFIER(0).getText(),
+    type: attribute.IDENTIFIER(1).getText(),
     description,
   }
 }
@@ -55,9 +55,27 @@ function transformNode (node: NodeContext): FASTNode {
   }
 
 }
+function refineNode (node: NodeContext, fast: FASTObject) {
+  for (let ref of node.node_refinements().node_refinement()) {
+    if (ref.getText().startsWith('refines concept')) {
+      const conceptName = ref.IDENTIFIER(0).getText()
+      const concept = fast.nodes[conceptName]
+      const originalNode = fast.nodes[node.IDENTIFIER().getText()]
+      fast.nodes[node.IDENTIFIER().getText()].payload.attributes = [
+        ...originalNode.payload.attributes,
+        ...concept.payload.attributes,
+      ]
+      return node
+    }
+  }
+
+}
 for (let node of result.node()) {
   const transformed = transformNode(node)
   fast.nodes[transformed.name] = transformed
+}
+for (let node of result.node()) {
+  refineNode(node, fast)
 }
 
 console.log(convertFASToPuml(fast))

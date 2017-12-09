@@ -1,8 +1,8 @@
-concept Testing {
+concept TodoItem {
   attributes {
-    title: String /* The title of a todo item */,
-    created_at: Date,
-    tags: Tag,
+    title: String /* The title of a todo item */
+    created_at: Date
+    tags: Tag
   }
   actions {
     add
@@ -10,4 +10,32 @@ concept Testing {
     remove
   }
 }
-node Test
+concept Tag {
+  attributes {
+      title: string
+      todo_items: TodoItem
+  }
+  actions {
+    add
+  }
+}
+
+
+table todo_items {
+  refines concept TodoItem
+  attributes {
+    id: integer
+    updated_at: date
+  }
+}
+
+table todo_items__tags {
+  refines relation TodoItem Tag
+}
+
+table tags {
+  refines concept Tag
+  attributes {
+    id: integer
+  }
+}
