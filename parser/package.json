@@ -11,7 +11,8 @@
     "build:typescript": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "antlr4ts": "^0.4.0-alpha.2"
+    "antlr4ts": "^0.4.0-alpha.2",
+    "node-plantuml": "^0.5.0"
   },
   "devDependencies": {
     "@types/node": "^8.0.57",

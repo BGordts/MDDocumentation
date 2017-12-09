@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+
 // Plant UML stuff
 interface PUMLNode {
   name: string;
@@ -138,4 +140,10 @@ let example2 = {
   }
 }
 
-console.log(convertFASToPuml(example2))
+fs.writeFile('generated.puml', convertFASToPuml(example2), function(err) {
+    if(err) {
+        return console.log(err);
+    }
+
+    console.log("The file was saved!");
+})

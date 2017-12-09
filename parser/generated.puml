@@ -1,0 +1,10 @@
+@startuml
+
+entity Concepts#TodoItem {
+    title (string)
+}
+  
+
+Concepts#TodoItem --> Concepts#Tag
+
+@enduml
