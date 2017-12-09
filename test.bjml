@@ -1,35 +1,36 @@
 // The model itself
 
 module Data
-# An exercise is the smallest unit a student can do in the mobile app
-datanode Exercise
-  attributes
-    # This is the main question
-    question: Option<string>
-      delivers_content_for Component.Question
+  # An exercise is the smallest unit a student can do in the mobile app
+  datanode Exercise
+    attributes
+      # This is the main question
+      question: Option<string>
+        delivers_content_for Component.Question
 
-datanode SelectCodeExercise
-  extends Exercise
-  attributes
-    solution: string
-    options: string[]
+  datanode SelectCodeExercise
+    extends Exercise
+    attributes
+      solution: string
+      options: string[]
 
 module Database
-databaseTable exercises
-  attributes
-    question: Option<string>
-      contains Exercise#question
-    type_data: JSON
-      contains SelectCode#solution
-      contains SelectCode#options
+  databaseTable exercises
+    attributes
+      question: Option<string>
+        contains Exercise#question
+      type_data: JSON
+        contains SelectCode#solution
+        contains SelectCode#options
 
 module Component
-# The main question explaining the problem to the user
-component Question
-  attributes
-  content_delivered_by Exercise#question
+  # The main question explaining the problem to the user
+  component Question
+    attributes
+    content_delivered_by Exercise#question
 
 // The meta-model
+
 node datanode
   base_types
     string

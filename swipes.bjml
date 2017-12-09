@@ -1,0 +1,98 @@
+module Concepts
+  node TodoItem
+    attributes
+      title: string
+      created_at: date
+      tags: Tag[]
+      notes: string[]
+      scheduled_at: date
+      copmpleted: boolean
+    actions
+      add
+      edit
+      remove
+
+  node Tag
+    attributes
+      title: string
+      todo_items: TodoItem[]
+    actions
+      add
+
+  node TodoListView
+    attributes
+      sections: TodoListViewSection[]
+
+  node TodoListViewSection
+    attributes
+      title
+      todo_items: TodoItem[]
+
+  node TodoListViewScheduled
+    extends TodoListView
+
+  node TodoListViewCurrent
+    extends TodoListView
+
+  node TodoListViewCompleted
+    extends TodoListView
+
+module Data
+  table todo_items
+    link
+      Concepts#TodoItem
+    attributes
+      id: integer
+      title: string(50)
+      created_at: date_time
+      notes: string[]
+      scheduled_at: date
+      copmpleted: boolean
+
+  table todo_items__tags
+    link
+      relation Concepts#TodoItem Concepts#Tags
+      Concepts#TodoItem#tags
+      Concepts#Tags#TodoItem
+    attributes
+
+
+  table tags
+    link
+      Concepts#Tag
+    attributes
+      id: integer
+
+
+
+
+
+
+  table tags
+
+module Screens
+  # These will basically be your react components
+
+  node DefaultScreen
+    attributes
+      side_bar: SideBar
+      header: Header
+      main: Main
+
+# Questions
+# - Is it always possible to link concepts with database elements? What if not?
+# - Do we want to be able to 'generate' fields from other nodes? E.g. can we generate the fields of a db table from the fields of a concept.
+# -- This can happen in the following ways:
+# --- We generate the data model from the concept model
+# ---- How do you do generation when you edited the data model after generation?
+# --- We just write 'this table is linked with this concept' and have some way of specifying the differences
+# ----- We could do this by having 'default' transformations that can be overridden / extended. Like the 'apply' function of TerraForm?
+# ----- Then we still need a DSL to write down the database model
+# --- We require explicit writing down of the fields, with some good editor / linter support. Per field we can specify the link.
+# ----- The 'java' way or NOT 'convention over configuration'. Most flexible though, least magical.
+# ----- How do you do stuff like one to many, many to many from concept --> data model? This almost requires generation.
+# - What level of abstraction does the data module need?
+# -- Where do we specify limits on strings for ex? This should be on the data module level
+# - How do we specify constraints? Where should these be made?
+
+# - Do we want to write Table todo_items or rather node todo_items in the data module?
