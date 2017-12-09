@@ -39,40 +39,22 @@ module Concepts
 
 module Data
   table todo_items
-    link
-      Concepts#TodoItem
+    refines concept Concepts.TodoItem
     attributes
       id: integer
-      title: string(50)
-      created_at: date_time
-      notes: string[]
-      scheduled_at: date
-      copmpleted: boolean
+      updated_at: date
 
   table todo_items__tags
-    link
-      relation Concepts#TodoItem Concepts#Tags
-      Concepts#TodoItem#tags
-      Concepts#Tags#TodoItem
-    attributes
-
-
-  table tags
-    link
-      Concepts#Tag
+    refines relation Concepts.TodoItem Concepts.Tags
     attributes
       id: integer
 
-
-
-
-
-
   table tags
+    refines concept Concepts.Tag
+    attributes
+      id: integer
 
 module Screens
-  # These will basically be your react components
-
   node DefaultScreen
     attributes
       side_bar: SideBar
@@ -94,5 +76,7 @@ module Screens
 # - What level of abstraction does the data module need?
 # -- Where do we specify limits on strings for ex? This should be on the data module level
 # - How do we specify constraints? Where should these be made?
+# - Do we want to specify some constraints already in our concepts?
+# -- Yes, as they then can be used in all the rest of the model
 
 # - Do we want to write Table todo_items or rather node todo_items in the data module?
