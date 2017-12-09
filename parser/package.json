@@ -1,0 +1,21 @@
+{
+  "name": "bjml-parser",
+  "version": "1.0.0",
+  "description": "A parser for .bjml files",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:grammar && npm run build:typescript",
+    "build:grammar": "antlr4ts -visitor grammar/bjml.g4",
+    "build:typescript": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "antlr4ts": "^0.4.0-alpha.2"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.57",
+    "antlr4ts-cli": "^0.4.0-alpha.2",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.2"
+  }
+}
