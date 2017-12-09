@@ -1,0 +1,20 @@
+import Concept_Exercises
+
+module Concepts_Content {
+  concept Course {
+    title: string
+    description: string
+    desktop_course: Desktop.Course "The Desktop Course this (Mobile) course is equivalent to." 
+    chapters: Chapter[]
+  }
+
+  concept Chapter {
+    course: Course
+    lessons: Lesson[]
+  }
+
+  concept Lesson {
+    chapter: Chapter
+    exercises: Concept_Exercises.Exercises[]
+  }
+}
