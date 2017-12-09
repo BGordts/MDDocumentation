@@ -4,25 +4,17 @@ import { ParseTree } from 'antlr4ts/tree/ParseTree';
 import { bjmlLexer } from './grammar/bjmlLexer'
 import { bjmlParser, NodeContext, Node_attributeContext } from './grammar/bjmlParser'
 import { bjmlVisitor } from './grammar/bjmlVisitor'
+import { FASTObject, FASTNode } from './generator/fast_types'
+import { convertFASToPuml } from './generator/puml_generator'
 
 const file = readFileSync('./grammar/test.bjml').toString()
-// // Create the lexer and parser
 let inputStream = new ANTLRInputStream(file);
 let lexer = new bjmlLexer(inputStream)
 let tokenStream = new CommonTokenStream(lexer);
 let parser = new bjmlParser(tokenStream);
-
-// // Parse the input, where `compilationUnit` is whatever entry point you defined
 let result = parser.file();
 
-type Ast = {
-  nodes: {
-    [key: string]: NodeAst,
-  },
-  edges: {
-  },
-}
-const ast: Ast = {
+const fast: FASTObject = {
   nodes: {},
   edges: {},
 }
@@ -40,20 +32,13 @@ function transformAttribute (attribute: Node_attributeContext): AttributeAst {
   }
 
   return {
-    name: attribute.IDENTIFIER().getText(),
-    type: attribute.LOW_IDENTIFIER().getText(),
+    name: attribute.LOW_IDENTIFIER().getText(),
+    type: attribute.IDENTIFIER().getText(),
     description,
   }
 }
 
-type NodeAst = {
-  type: string,
-  name: string,
-  payload: {
-    attributes: AttributeAst[],
-  },
-}
-function transformNode (node: NodeContext): NodeAst {
+function transformNode (node: NodeContext): FASTNode {
   let attributes: AttributeAst[] = []
   try {
     attributes = node.node_attributes().node_attribute().map(transformAttribute)
@@ -64,13 +49,15 @@ function transformNode (node: NodeContext): NodeAst {
     name: node.IDENTIFIER().getText(),
     payload: {
       attributes,
-      // attributes: node.node_attributes().node_attribute().map(transformAttribute)
     }
   }
 
 }
 for (let node of result.node()) {
   const transformed = transformNode(node)
-  ast.nodes[transformed.name] = transformed
+  fast.nodes[transformed.name] = transformed
 }
-console.log(ast)
+
+console.log(fast)
+console.log(fast.nodes.Testing.payload)
+console.log(convertFASToPuml(fast))
