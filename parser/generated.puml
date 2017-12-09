@@ -1,10 +1,11 @@
 @startuml
 
 class Concepts.TodoItem {
-  {field}   title (string)
+  {field} title (string)
+  {field} created_at (date)
 }
 class Concepts.Tag {
-  {field}   title (string)
+  {field} title (string)
 }
 
 Concepts.TodoItem --> Concepts.Tag

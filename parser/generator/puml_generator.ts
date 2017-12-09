@@ -61,7 +61,7 @@ function drawRelation(relation: PUMLRelation) {
 
 function drawNode(node: PUMLNode) {
   return `class ${node.name} {
-  {field} ${node.fields.map(field => '  ' + drawField(field)).join('\n')}
+${node.fields.map(field => '  {field} ' + drawField(field)).join('\n')}
 }`
 }
 
@@ -91,6 +91,11 @@ let example2 = {
             name: 'title',
             type: 'string',
             description: 'The title of a todo item',
+          },
+          {
+            name: 'created_at',
+            type: 'date',
+            description: 'When the todo was created',
           },
         ],
         actions: [
