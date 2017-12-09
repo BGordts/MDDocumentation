@@ -1,54 +1,43 @@
 grammar bjml;
 
 file
-   : opcode+
-   ;
+  : node+
+  ;
 
-opcode
-   : GT | LT | PLUS | MINUS | DOT | COMMA | LPAREN | RPAREN
-   ;
+node
+  : NODE_CLASS IDENTIFIER (LBRACE node_attributes? node_actions? RBRACE)?
+  ;
 
+node_attributes
+  : 'attributes' LBRACE node_attribute* RBRACE
+  ;
 
-GT
-   : '>'
-   ;
+node_attribute
+  : LOW_IDENTIFIER COLON IDENTIFIER MULTI_LINE_COMMENT? COMMA
+  ;
 
+node_actions
+  : 'actions' LBRACE node_action* RBRACE
+  ;
 
-LT
-   : '<'
-   ;
+node_action
+  : LOW_IDENTIFIER
+  ;
 
+LBRACE: '{';
+RBRACE: '}';
+COLON: ':';
+COMMA: ',';
 
-PLUS
-   : '+'
-   ;
+MULTI_LINE_COMMENT: '/*' .*? '*/';
+NODE_CLASS: 'concept' | 'node';
+IDENTIFIER: [A-Z][a-zA-Z]*;
 
+LOW_IDENTIFIER: [a-z][a-zA-Z_]*;
 
-MINUS
-   : '-'
-   ;
-
-
-DOT
-   : '.'
-   ;
-
-
-COMMA
-   : ','
-   ;
-
-
-LPAREN
-   : '['
-   ;
-
-
-RPAREN
-   : ']'
-   ;
-
+/* NL: ('\r\n'|'\n'|'\r')+; */
+/* WS: [ \t\r\n] -> skip; */
 
 WS
-   : . -> skip
+   : [ \t\n\r] + -> skip
    ;
