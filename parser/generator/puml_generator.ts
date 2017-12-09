@@ -20,7 +20,7 @@ interface PUMLRelation {
   to: string;
 }
 
-function convertFASToPuml(fastObj: FASTObject) {
+export function convertFASToPuml(fastObj: FASTObject) {
   let nodes: PUMLNode[] = Object.values(fastObj.nodes).map(fastNode => {
     return {
       name: convertFASTName(fastNode.name),
@@ -139,14 +139,14 @@ let example2 = {
   }
 }
 
-fs.writeFile('generated.puml', convertFASToPuml(example2), function(err) {
-  if(err) {
-      return console.log(err)
-  }
+// fs.writeFile('generated.puml', convertFASToPuml(example2), function(err) {
+//   if(err) {
+//       return console.log(err)
+//   }
 
-  console.log("The file was saved!")
+//   console.log("The file was saved!")
 
-  console.log("Generating image")
-  var gen = plantuml.generate("generated.puml", {format:'svg'})
-  gen.out.pipe(fs.createWriteStream("generated-image.svg"))
-})
+//   console.log("Generating image")
+//   var gen = plantuml.generate("generated.puml", {format:'svg'})
+//   gen.out.pipe(fs.createWriteStream("generated-image.svg"))
+// })

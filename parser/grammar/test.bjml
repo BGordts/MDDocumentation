@@ -1,0 +1,13 @@
+concept Testing {
+  attributes {
+    title: String /* The title of a todo item */,
+    created_at: Date,
+    tags: Tag,
+  }
+  actions {
+    add
+    edit
+    remove
+  }
+}
+node Test
