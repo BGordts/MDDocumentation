@@ -3,9 +3,7 @@ type FASTObject = {
   nodes: {
     [key: string]: FASTNode
   };
-  edges: {
-    [key: string]: FASTEdge
-  };
+  edges: FASTEdge[],
 }
 
 type FASTNode = {

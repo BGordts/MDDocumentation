@@ -28,10 +28,11 @@ export function convertFASToPuml(fastObj: FASTObject) {
         return {
           name: convertFASTName(attr.name),
           type: attr.type,
-        }})}
+        }})
+      }
     })
 
-  let relations: PUMLRelation[] = Object.values(fastObj.edges).map(fastEdge => {
+  let relations: PUMLRelation[] = fastObj.edges.map(fastEdge => {
     return {
       from: convertFASTName(fastEdge.payload.from),
       to: convertFASTName(fastEdge.payload.to),
@@ -50,7 +51,7 @@ function drawPUMLFile(nodes: PUMLNode[], relations: PUMLRelation[]) {
 
 ${nodes.map(drawNode).join('\n')}
 
-${relations.map(drawRelation)}
+${relations.map(drawRelation).join('\n')}
 
 @enduml`
 }

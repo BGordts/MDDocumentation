@@ -2,8 +2,8 @@ concept TodoItem {
   attributes {
     title: String /* The title of a todo item */
     created_at: Date
-    tags: Tag
   }
+  has_one tag: Tag
   actions {
     add
     edit
@@ -13,8 +13,8 @@ concept TodoItem {
 concept Tag {
   attributes {
       title: string
-      todo_items: TodoItem
   }
+  has_many todo_items: TodoItem
   actions {
     add
   }
